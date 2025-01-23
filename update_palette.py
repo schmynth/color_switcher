@@ -1,9 +1,7 @@
-import extract_colors as e
-import replace_text as r
+import modules.extract_colors as e
+import modules.replace_text as r
 import os
 import linecache
-
-e.run_wallbash()
 
 output_filename = "color_palette.css"
 user_directory = os.path.expanduser('~') + '/'
