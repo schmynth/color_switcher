@@ -29,7 +29,7 @@ def run_wallbash():
     wallpaper_path = get_wallpaper_path()
     print("subprocess command: ", command)
     if not os.path.isfile(wallpaper_path + '.dcol'):
-        subprocess.call(command)
+        subprocess.call(command, shell=True)
 
 def get_color_codes_dict():
     lines_color_nl = {
