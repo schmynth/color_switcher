@@ -7,7 +7,7 @@ output_filename = "color_palette.css"
 user_directory = os.path.expanduser('~') + '/'
 
 # read dcol file of current wallpaper
-color_codes_dict = e.get_color_codes_dict()
+color_codes_dict = e.get_color_codes_dict_rgba()
 
 # read output file into data
 with open(output_filename,'r', encoding='utf-8') as file:
@@ -22,7 +22,7 @@ print("old data:\n", data)
 # check if line contains "value0 #..."
 for color in color_codes_dict:
 
-    data_list = r.replace_color(data, color, color_codes_dict[color])
+    data_list = r.replace_color_rgba(data, color, color_codes_dict[color])
     data_str = ""
 
 # convert file data from list to string for write()-function

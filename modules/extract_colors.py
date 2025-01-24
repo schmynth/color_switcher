@@ -31,7 +31,7 @@ def run_wallbash():
     if not os.path.isfile(wallpaper_path + '.dcol'):
         subprocess.call(command, shell=True)
 
-def get_color_codes_dict():
+def get_color_codes_dict_rgb():
     lines_color_nl = {
         'primary1' : 2,
         'text1' : 4,
@@ -63,7 +63,6 @@ def get_color_codes_dict():
         }
     lines_color_ln = {v: k for k, v in lines_color_nl.items()}
 
-
     # check if palette file (wallpaper.jpg.dcol) exists
     # if not, create it with wallbash
     #speculative_palette_path = get_wallpaper_path() + '.dcol'
@@ -85,6 +84,66 @@ def get_color_codes_dict():
         # check if line is interesting
         if current_line_number in lines_color_ln.keys():
             current_code = line[11:17]
+            color_codes_dict.update({lines_color_ln[current_line_number] : current_code})
+        current_line_number += 1
+
+    return color_codes_dict
+
+def get_color_codes_dict_rgba():
+    lines_color_nl = {
+        'primary1' : 2,
+        'text1' : 4,
+        'accent1_1' : 6,
+        'accent2_1' : 8,
+        'accent3_1' : 10,
+        'accent4_1' : 12,
+        
+        'primary2' : 24,
+        'text2' : 26,
+        'accent1_2' : 28,
+        'accent2_2' : 30,
+        'accent3_2' : 32,
+        'accent4_2' : 34,
+
+        'primary3' : 46,
+        'text3' : 48,
+        'accent1_3' : 50,
+        'accent2_3' : 52,
+        'accent3_3' : 54,
+        'accent4_3' : 56,
+
+        'primary4' : 68,
+        'text4' : 70,
+        'accent1_4' : 72,
+        'accent2_4' : 74,
+        'accent3_4' : 76,
+        'accent4_4' : 78,
+        }
+    lines_color_ln = {v+1: k for k, v in lines_color_nl.items()}
+
+    # check if palette file (wallpaper.jpg.dcol) exists
+    # if not, create it with wallbash
+    #speculative_palette_path = get_wallpaper_path() + '.dcol'
+    #if not os.path.isfile(speculative_palette_path):
+    run_wallbash()
+
+    # def extract_color(group, color_class):
+
+    # open palette file and save data to palette_data
+    palette_path = get_wallpaper_path() + '.dcol'
+    with open(palette_path,'r', encoding='utf-8') as file:
+        palette_data = file.readlines()
+
+
+    # generate color name -> color code dictionary from palette file
+    color_codes_dict = {}
+    current_line_number = 1
+    for line in palette_data:
+        # check if line is interesting
+        if current_line_number in lines_color_ln.keys():
+            current_code = line[16:]
+            current_code = current_code.rstrip("\n\"")
+            #current_code = current_code.lstrip("#")
             color_codes_dict.update({lines_color_ln[current_line_number] : current_code})
         current_line_number += 1
 
