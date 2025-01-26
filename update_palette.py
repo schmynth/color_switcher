@@ -2,9 +2,13 @@ import modules.extract_colors as e
 import modules.replace_text as r
 import os
 import linecache
+import subprocess
 
 output_filename = "color_palette.css"
 user_directory = os.path.expanduser('~') + '/'
+
+def restart_waybar():
+    subprocess.call("./.scripts/restart_waybar.sh", shell=True)
 
 # read dcol file of current wallpaper
 color_codes_dict = e.get_color_codes_dict_rgba()
@@ -42,4 +46,4 @@ with open("color_palette.txt", "w") as f:
     f.write(data_str)
 f.close()
 
-
+restart_waybar()
